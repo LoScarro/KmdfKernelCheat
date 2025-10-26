@@ -3,7 +3,7 @@
 A kernel-mode driver written in C using the Kernel-Mode Driver Framework (KMDF) and a user-mode client. Demonstrates locating and modifying a game process’s in-memory value (player money for the game OpenTTD) from kernel space.
 
 ## Overview
-Built with Visual Studio + WDK. Compiled to a `.sys` file and loaded with `sc` (create / start). A user-mode tool opens the driver device and sends the target process PID. The driver resolves the in-process money address via a module base plus a pointer-offset chain and writes a new integer value from kernel context.
+Built with Visual Studio + WDK. Compiled to a `.sys` file and loaded with `sc` (create / start). A user-mode tool opens the driver device and sends the target process PID. The driver resolves the in-process money address starting from a static base address and traversing a pointer chain of offsets (identified with Cheat Engine). The driver then writes a new integer value into the target process memory from kernel context.
 
 ## Key functions
 - `DriverEntry`: initializes the driver, creates the device object and symbolic link, registers major functions, sets `DriverUnload`.
@@ -18,3 +18,6 @@ Built with Visual Studio + WDK. Compiled to a `.sys` file and loaded with `sc` (
 2. User-mode client opens the symbolic link (`CreateFile`).  
 3. Client calls `DeviceIoControl`, sending the PID.  
 4. Driver resolves the PID, traces the pointer chain to the money address, writes the new value, completes the IRP.
+
+## Credits
+Based on the [Shhoya/Examples](https://github.com/Shhoya/Examples) repository. Accessed on 07/24/2024.
