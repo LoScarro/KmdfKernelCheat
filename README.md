@@ -1,6 +1,6 @@
 # Cheat Driver Example
 
-A kernel-mode driver written in C using the Kernel-Mode Driver Framework (KMDF) and a user-mode client. Demonstrates locating and modifying a game process’s in-memory value (player money for OpenTTD) from kernel space.
+A kernel-mode driver written in C using the Kernel-Mode Driver Framework (KMDF) and a user-mode client. Demonstrates locating and modifying a game process’s in-memory value (player money for the game OpenTTD) from kernel space.
 
 ## Overview
 Built with Visual Studio + WDK. Compiled to a `.sys` file and loaded with `sc` (create / start). A user-mode tool opens the driver device and sends the target process PID. The driver resolves the in-process money address via a module base plus a pointer-offset chain and writes a new integer value from kernel context.
